@@ -1,0 +1,2 @@
+enabled: true
+datafile: 'backlinks.yaml'  # relative to `user/data`
