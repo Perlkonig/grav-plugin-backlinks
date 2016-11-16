@@ -41,8 +41,18 @@ class BacklinksPlugin extends Plugin
         }
 
         $this->enable([
+            'onTwigSiteVariables' => ['onTwigSiteVariables', 0],
             'onShutdown' => ['onShutdown', 0]
         ]);
+    }
+
+    public function onTwigSiteVariables() {
+        $path = $this->grav['locator']->findResource('user://data', true);
+        $path .= DS.static::sanitize($this->grav['config']->get('plugins.backlinks.datafile'));
+        $datafh = File::instance($path);
+        $data = Yaml::parse($datafh->content());
+        $datafh->free();
+        $this->grav['twig']->twig_vars['backlinks'] = $data;
     }
 
     public function onShutdown()
