@@ -41,12 +41,12 @@ class BacklinksPlugin extends Plugin
         }
 
         $this->enable([
-            'onTwigSiteVariables' => ['onTwigSiteVariables', 0],
+            'onPagesInitialized' => ['onPagesInitialized', 0],
             'onShutdown' => ['onShutdown', 0]
         ]);
     }
 
-    public function onTwigSiteVariables() {
+    public function onPagesInitialized() {
         $path = $this->grav['locator']->findResource('user://data', true);
         $path .= DS.static::sanitize($this->grav['config']->get('plugins.backlinks.datafile'));
         $datafh = File::instance($path);
